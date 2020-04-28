@@ -49,13 +49,6 @@ def main():
 
     if nbs:
         modified_nbs = check_nb(nbs)
-        if modified_nbs:
-            # Commit changes
-            commit_changes(modified_nbs)
-            # Push
-            push_changes()
-        else:
-            print('Nothing to add. Nothing to update!')
     else:
         print('There is no modified notebooks in a current commit.')
 
@@ -208,36 +201,6 @@ def write_nb(data: dict, file_path: str) -> None:
     """
     with open(file_path, 'w') as f:
         json.dump(data, f, indent=2)
-
-
-def commit_changes(nbs: list):
-    """Commits changes.
-    """
-    set_email = ['git', 'config', 'user.email', 'colab-badge-action@master']
-    set_user = ['git', 'config', 'user.name', 'Colab Badge Action']
-
-    sp.run(set_email, check=True)
-    sp.run(set_user, check=True)
-
-    nbs = ' '.join(set(nbs))
-    git_add = ['git', 'add', nbs]
-    git_commit = ['git', 'commit', '-m', 'Add/Update Colab Badges']
-
-    print(f'Committing {nbs}...')
-
-    sp.run(git_add, check=True)
-    sp.run(git_commit, check=True)
-
-
-def push_changes():
-    """Pushes commit.
-    """
-    set_url = ['git', 'remote', 'set-url', 'origin',
-               f'https://x-access-token:{GITHUB_TOKEN}@github.com/'
-               f'{CURRENT_REPOSITORY}']
-    git_push = ['git', 'push', 'origin', CURRENT_BRANCH]
-    sp.run(set_url, check=True)
-    sp.run(git_push, check=True)
 
 
 if __name__ == '__main__':
