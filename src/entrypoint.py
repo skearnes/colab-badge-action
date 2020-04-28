@@ -58,7 +58,7 @@ def get_modified_nbs() -> list:
     """
     cmd = ['git', 'diff-tree', '--no-commit-id', '--name-only', '-r', 'HEAD']
     committed_files = sp.run(
-        cmd, check=True, capture_output=True).stdout.split('\n')
+        cmd, check=True, capture_output=True).stdout.decode().split('\n')
     nbs = [nb for nb in committed_files if
            (nb.endswith('.ipynb') and os.path.isfile(nb))]
     return nbs
