@@ -200,7 +200,7 @@ def write_nb(data: dict, file_path: str) -> None:
     """Saves modified jupyter notebook.
     """
     with open(file_path, 'w') as f:
-        json.dump(data, f, indent=2)
+        json.dump(data, f, indent=1)
 
 
 if __name__ == '__main__':
